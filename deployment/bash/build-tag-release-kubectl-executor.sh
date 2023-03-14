@@ -3,8 +3,8 @@
 
 if [ $# -lt 4 ]
   then
-    echo "Not enough arguments. Usage: ./build-tag-release.sh appname user region tenancy-hash"
-    echo "Example: ./build-tag-release.sh samplespringboot oracleidentitycloudservice/denny.alquinta@oracle.com sa-santiago-1 idlhjo6dp3bd"
+    echo "Not enough arguments. Usage: ./build-tag-release-kubectl-executor.sh appname user region tenancy-hash"
+    echo "Example: ./build-tag-release-kubectl-executor.sh kubectl-executor oracleidentitycloudservice/denny.alquinta@oracle.com sa-santiago-1 idlhjo6dp3bd"
     exit 1
 
 else
@@ -26,10 +26,10 @@ export OCIR_USER=$TENANCY_HASH/$2
   else
 
     echo "--- pruning images ---"
-     #docker system prune -f -a
+    docker system prune -f -a
 
-    echo "--- building image ${APP_NAME}:latest ---"
-    docker build -t ${APP_NAME}:latest ../../
+    echo "--- DEBUG HERE building image ${APP_NAME}:latest ---"
+    docker build -t ${APP_NAME}:latest ../yaml/hpa
 
     echo "--- tag image ${APP_NAME}:latest ---"
     docker tag ${APP_NAME}:latest ${REGION}/${TENANCY_HASH}/${APP_NAME}:latest

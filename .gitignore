@@ -3,6 +3,9 @@
 ######################
 /target/www/**
 /src/test/javascript/coverage/
+ociconfig
+kubeconfig
+private
 
 ######################
 # Node

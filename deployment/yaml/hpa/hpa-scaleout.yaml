@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: samplespringboot-hpa-start
+  namespace: samplespringboot
+spec:
+  schedule: "CRON_TZ=America/Santiago 13 12 * * 1-5"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: samplespringboot-hpa-start
+            image: sa-santiago-1.ocir.io/idlhjo6dp3bd/kubectl-executor:latest
+            imagePullPolicy: Always
+            command: ["bash", "-c", "kubectl scale deployment samplespringboot-deployment --replicas=14 -n samplespringboot"]
+          imagePullSecrets:
+            - name: samplespringboot-ocir-secret
+          restartPolicy: OnFailure
